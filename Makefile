@@ -10,7 +10,11 @@ create-project:
 	@make laravel-install
 	docker-compose exec app php artisan key:generate
 	docker-compose exec app php artisan storage:link
+	@make set-permission
 	@make fresh
+set-permission:
+	docker-compose exec app chmod -R 775 storage 
+	docker-compose exec app chmod -R 775 bootstrap/cache
 install-recommend-packages:
 	docker-compose exec app composer require doctrine/dbal
 	docker-compose exec app composer require --dev barryvdh/laravel-ide-helper
