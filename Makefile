@@ -6,11 +6,11 @@ laravel-install:
 	docker-compose exec app composer create-project --prefer-dist laravel/laravel .
 	docker-compose exec app php artisan key:generate
 	docker-compose exec app php artisan storage:link
+	@make set-permission
 create-project:
 	@make build
 	@make up
 	@make laravel-install
-	@make set-permission
 	@make fresh
 set-permission:
 	docker-compose exec app chmod -R 777 storage 

@@ -9,7 +9,7 @@ services:
       dockerfile: ./infra/docker/php/Dockerfile
     volumes:
       - php-fpm-socket:/var/run/php-fpm
-      - ./backend:/work/backend
+      - ./backend/${APP_NAME:-app}:/work/backend
     environment:
       - DB_CONNECTION=mysql
       - DB_HOST=db
@@ -17,6 +17,7 @@ services:
       - DB_DATABASE=${DB_NAME:-laravel_local}
       - DB_USERNAME=${DB_USER:-phper}
       - DB_PASSWORD=${DB_PASS:-secret}
+      - APP_NAME=${APP_NAME:-app}
 
   web:
     build:
@@ -26,7 +27,9 @@ services:
       - ${WEB_PORT:-80}:80
     volumes:
       - php-fpm-socket:/var/run/php-fpm
-      - ./backend:/work/backend
+      - ./backend/${APP_NAME:-app}:/work/backend
+    environment:
+      - APP_NAME=${APP_NAME:-app}
 
   db:
     build:
