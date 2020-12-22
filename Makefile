@@ -13,8 +13,8 @@ create-project:
 	@make set-permission
 	@make fresh
 set-permission:
-	docker-compose exec app chmod -R 775 storage 
-	docker-compose exec app chmod -R 775 bootstrap/cache
+	docker-compose exec app chmod -R 777 storage 
+	docker-compose exec app chmod -R 777 bootstrap/cache
 install-recommend-packages:
 	docker-compose exec app composer require doctrine/dbal
 	docker-compose exec app composer require --dev barryvdh/laravel-ide-helper
