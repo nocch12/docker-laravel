@@ -14,7 +14,7 @@ create-project:
 	@make fresh
 set-permission:
 	docker-compose exec app chmod -R 777 storage
-	docker-compose exec app chmod -R 777 bootstrap/cach
+	docker-compose exec app chmod -R 777 bootstrap/cache
 install-recommend-packages:
 	docker-compose exec app composer require doctrine/dbal "^2"
 	docker-compose exec app composer require --dev ucan-lab/laravel-dacapo
