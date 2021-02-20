@@ -13,10 +13,11 @@ create-project:
 	@make laravel-install
 	@make fresh
 set-permission:
-	docker-compose exec app chmod -R 777 storage 
-	docker-compose exec app chmod -R 777 bootstrap/cache
+	docker-compose exec app chmod -R 777 storage
+	docker-compose exec app chmod -R 777 bootstrap/cach
 install-recommend-packages:
-	docker-compose exec app composer require doctrine/dbal
+	docker-compose exec app composer require doctrine/dbal "^2"
+	docker-compose exec app composer require --dev ucan-lab/laravel-dacapo
 	docker-compose exec app composer require --dev barryvdh/laravel-ide-helper
 	docker-compose exec app composer require --dev beyondcode/laravel-dump-server
 	docker-compose exec app composer require --dev barryvdh/laravel-debugbar
@@ -29,6 +30,7 @@ init:
 	docker-compose exec app cp .env.example .env
 	docker-compose exec app php artisan key:generate
 	docker-compose exec app php artisan storage:link
+	docker-compose exec app chmod -R 777 storage bootstrap/cache
 	@make fresh
 remake:
 	@make destroy
@@ -72,6 +74,8 @@ fresh:
 	docker-compose exec app php artisan migrate:fresh --seed
 seed:
 	docker-compose exec app php artisan db:seed
+dacapo:
+	docker-compose exec app php artisan dacapo
 rollback-test:
 	docker-compose exec app php artisan migrate:fresh
 	docker-compose exec app php artisan migrate:refresh
